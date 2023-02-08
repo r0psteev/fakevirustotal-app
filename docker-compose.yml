@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  nginx:
+    image: nginx
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    # nginx to act as reverse proxy for the apps
+    ports:
+    - "80:80"
+  api:
+    # the faketotal api server
+    image: r0psteev/faketotal-api-server:latest
+
+  web:
+    image: r0psteev/faketotal-web-server:latest

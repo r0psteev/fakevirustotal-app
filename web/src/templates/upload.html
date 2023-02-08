@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Investigate</title>
+
+    <style>
+        label {
+            width:  50%;
+            margin: auto;
+            margin-top: 12rem;
+        }
+        input[type=submit] {
+            width: 100%;
+        }
+        input[type=file] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!--- Navigation -->
+
+    <div class="tabs is-centered">
+  <ul>
+    <li class="is-active">
+      <a href="/">
+        <span class="icon is-small"><i class="fas fa-bug" aria-hidden="true"></i></span>
+        <span>Investigate New sample</span>
+      </a>
+    </li>
+    <li>
+      <a href="/add">
+        <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+        <span>Register Sample to database</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+    <div class="container">
+
+        <article class="message is-dark">
+            {% if sample["name"] != "" %}
+            <div class="message-header">
+                <p> {{ sample["name"] }} </p>
+                <button class="delete" aria-label="delete"></button>
+            </div>
+            <!-- File hash -->
+            <div class="message-body">
+                <p> {{ sample["hash"] }} </p>
+                {% for tag in sample["tags"] %}
+                <span class="tag is-danger">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </article>
+
+        <!-- File upload-->
+        <!-- with enctype, file doesn't get uploaded-->
+        <!--
+        <form action="/" method=post enctype="multipart/form-data">
+            <input type="file"  name="file">
+            <input type="submit">
+        </form>
+        -->
+
+        <div class="container">
+            <form action="/" id="file-js-example" method=post enctype="multipart/form-data" class="file is-success has-name is-boxed">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="file">
+                    <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </span>
+                    <span class="file-label">
+                        Danger file…
+                    </span>
+                    </span>
+                    <span class="file-name">
+                        No File selected
+                    </span>
+                    <input class="button is-primary" style="margin-top: 2rem" type="submit">
+                </label>
+
+                </div>
+                <br/>
+                <br/>
+            </form>
+        </div>
+    </div>
+
+
+<script>
+  const fileInput = document.querySelector('#file-js-example input[type=file]');
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector('#file-js-example .file-name');
+      fileName.textContent = fileInput.files[0].name;
+    }
+  }
+</script>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+</body>
+</html>
